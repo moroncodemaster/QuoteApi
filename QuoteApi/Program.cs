@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using QuoteApi.Data;
+
 namespace QuoteApi;
 
 public class Program
@@ -8,7 +11,10 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-        
+        builder.Services.AddDbContext<QuotesDataContext>(o =>
+        {
+            o.UseNpgsql(Environment.GetEnvironmentVariable("DBCONNECTIONSTRING"));
+        });
         // builder.Services.AddDbContext<object>()
         
         

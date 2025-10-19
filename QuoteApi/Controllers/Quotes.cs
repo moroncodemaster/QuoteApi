@@ -4,6 +4,7 @@ using QuoteApi.Data;
 namespace QuoteApi.Controllers;
 
 [ApiController]
+[Route("api/[controller]")]
 public class Quotes : ControllerBase
 {
     private readonly QuotesDataContext _context;
@@ -13,6 +14,7 @@ public class Quotes : ControllerBase
     }
 
     // GET
+    [HttpGet]
     public string GetQuote()
     {
 
