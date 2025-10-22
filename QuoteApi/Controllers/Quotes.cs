@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuoteApi.Data;
+using QuoteApi.Models;
 
 namespace QuoteApi.Controllers;
 
@@ -30,4 +32,14 @@ public class Quotes : ControllerBase
         }
         return "error";
     }
+
+    [HttpPost]
+    [Authorize]
+    public async Task AddQuote(Quote quote)
+    {
+       _context.Quotes.Add(quote);
+       await _context.SaveChangesAsync();
+    }
+
+
 }
