@@ -8,10 +8,10 @@ using QuoteApi.Data;
 
 #nullable disable
 
-namespace QuoteApi.Data.MIgrations
+namespace QuoteApi.Data.Migrations
 {
     [DbContext(typeof(QuotesDataContext))]
-    [Migration("20251019211702_Initial")]
+    [Migration("20260504032000_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -28,17 +28,20 @@ namespace QuoteApi.Data.MIgrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("author");
 
                     b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(2500)
+                        .HasColumnType("character varying(2500)")
+                        .HasColumnName("quote");
 
                     b.HasKey("Id");
 

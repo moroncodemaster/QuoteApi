@@ -9,7 +9,7 @@ public class QuotesDataContext : DbContext
 #if DEBUG
     public QuotesDataContext()
     {
-        _connectionString = "Host=10.0.10.10;Port=8432;Database=quotes;Username=dbutt;Password=M3andsara";
+        _connectionString = "Host=10.0.10.10;Port=8432;Database=quotes;Username=apiuser;Password=l6IBkZN4eJ0XD9k!";
     }
     // public QuotesDataContext(DbContextOptions<QuotesDataContext> options) : base(options)
     // {

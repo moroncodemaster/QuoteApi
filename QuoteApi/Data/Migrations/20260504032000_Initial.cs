@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace QuoteApi.Data.MIgrations
+namespace QuoteApi.Data.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -15,14 +15,14 @@ namespace QuoteApi.Data.MIgrations
                 name: "Quotes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Text = table.Column<string>(type: "text", nullable: false),
-                    Author = table.Column<string>(type: "text", nullable: false)
+                    quote = table.Column<string>(type: "character varying(2500)", maxLength: 2500, nullable: true),
+                    author = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Quotes", x => x.Id);
+                    table.PrimaryKey("PK_Quotes", x => x.id);
                 });
         }
 

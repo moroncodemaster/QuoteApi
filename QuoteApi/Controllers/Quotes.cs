@@ -6,7 +6,7 @@ using QuoteApi.Models;
 namespace QuoteApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/quote")]
 public class Quotes : ControllerBase
 {
     private readonly QuotesDataContext _context;

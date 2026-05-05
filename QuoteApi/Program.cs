@@ -13,6 +13,12 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
+
         builder.Services.AddControllersWithViews();
         builder.Services.AddDbContext<QuotesDataContext>(o =>
         {
