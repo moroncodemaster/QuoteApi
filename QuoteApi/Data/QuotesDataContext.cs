@@ -15,8 +15,16 @@ public class QuotesDataContext : DbContext
     // {
     //     _connectionString = "Host=10.0.10.10;Port=8432;Database=quotes;Username=dbutt;Password=M3andsara";
     // }
+#else
+
+    public QuotesDataContext()
+    {
+        _connectionString = Environment.GetEnvironmentVariable("DBCONNECTIONSTRING");
+    }
 
 #endif
+
+
     public QuotesDataContext(string connectionString)
     {
         _connectionString = connectionString;

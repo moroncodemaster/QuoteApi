@@ -10,6 +10,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        DotNetEnv.Env.Load();
+        System.Console.WriteLine("Environment variables loaded");
+        Console.WriteLine(Environment.GetEnvironmentVariable("DBCONNECTIONSTRING"));
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
