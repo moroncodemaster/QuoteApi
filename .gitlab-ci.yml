@@ -1,0 +1,33 @@
+stages:
+  - build
+
+docker-build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script:
+    # The Dockerfile attempts to copy QuoteApi/.env, which is excluded from git.
+    # We create an empty file to ensure the build succeeds in the CI environment.
+    - touch QuoteApi/.env
+    - |
+      if [ -n "$CI_COMMIT_TAG" ]; then
+        tag="$CI_COMMIT_TAG"
+        echo "Running on tag '$CI_COMMIT_TAG': tagging as '$tag'"
+      elif [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
+        tag="latest"
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tagging as 'latest'"
+      else
+        tag="$CI_COMMIT_REF_SLUG"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tagging as '$tag'"
+      fi
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$tag" -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" -f QuoteApi/Dockerfile .
+    - docker push "$CI_REGISTRY_IMAGE:$tag"
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+  rules:
+    - if: $CI_COMMIT_BRANCH
+    - if: $CI_COMMIT_TAG
