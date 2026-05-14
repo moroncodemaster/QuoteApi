@@ -10,6 +10,7 @@ stages:
 variables:
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE/app
   DOCKER_TAG: $CI_COMMIT_SHORT_SHA
+  DOTNET_NUGET_SIGNATURE_VERIFICATION: "false"
 
 build_image:
   stage: build
