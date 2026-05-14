@@ -16,8 +16,7 @@ build_image:
   script:
     # Login to GitLab Container Registry
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    # Build the image using your Dockerfile
-    - docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
-    # Push the image to the registry
-    - docker push $DOCKER_IMAGE:$DOCKER_TAG
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$tag" -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" -f QuoteApi/Dockerfile .
+    - docker push "$CI_REGISTRY_IMAGE:$tag"
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
 
