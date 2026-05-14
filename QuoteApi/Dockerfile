@@ -1,11 +1,13 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
+ARG DOTNET_NUGET_SIGNATURE_VERIFICATION=false
+ENV DOTNET_NUGET_SIGNATURE_VERIFICATION=$DOTNET_NUGET_SIGNATURE_VERIFICATION
 WORKDIR /src
 COPY ["QuoteApi/QuoteApi.csproj", "QuoteApi/"]
 RUN dotnet restore "QuoteApi/QuoteApi.csproj"
