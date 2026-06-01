@@ -2,6 +2,7 @@ image: docker:stable
 
 services:
   - docker:dind
+    command: ["--mtu=1360"]
 
 before_script:
   - docker info
@@ -9,11 +10,18 @@ before_script:
 stages:
   - build
   - test
+  - security
 
 variables:
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE/app
   DOCKER_TAG: $CI_COMMIT_SHORT_SHA
   DOTNET_NUGET_SIGNATURE_VERIFICATION: "false"
+
+include:
+  - template: Security/SAST.gitlab-ci.yml                # Scans your source code for vulnerabilities
+  - template: Security/Secret-Detection.gitlab-ci.yml    # Checks for leaked credentials/tokens
+  - template: Security/Dependency-Scanning.gitlab-ci.yml # Scans open-source libraries
+  - template: Security/Container-Scanning.gitlab-ci.yml  # Scans Docker/container images
 
 build_image:
   stage: build
