@@ -9,7 +9,7 @@ ARG BUILD_CONFIGURATION=Release
 ARG DOTNET_NUGET_SIGNATURE_VERIFICATION=false
 ENV DOTNET_NUGET_SIGNATURE_VERIFICATION=$DOTNET_NUGET_SIGNATURE_VERIFICATION
 WORKDIR /src
-COPY ["QuoteApi/QuoteApi.csproj", "QuoteApi/"]
+COPY ["../QuoteApi.csproj", "QuoteApi/"]
 RUN dotnet restore "QuoteApi/QuoteApi.csproj"
 COPY . .
 WORKDIR "/src/QuoteApi"
