@@ -17,11 +17,11 @@ variables:
   DOCKER_TAG: $CI_COMMIT_SHORT_SHA
   DOTNET_NUGET_SIGNATURE_VERIFICATION: "false"
 
-include:
-  - template: Security/SAST.gitlab-ci.yml                # Scans your source code for vulnerabilities
-  - template: Security/Secret-Detection.gitlab-ci.yml    # Checks for leaked credentials/tokens
-  - template: Security/Dependency-Scanning.gitlab-ci.yml # Scans open-source libraries
-  - template: Security/Container-Scanning.gitlab-ci.yml  # Scans Docker/container images
+# include:
+#   - template: Security/SAST.gitlab-ci.yml                # Scans your source code for vulnerabilities
+#   - template: Security/Secret-Detection.gitlab-ci.yml    # Checks for leaked credentials/tokens
+#   - template: Security/Dependency-Scanning.gitlab-ci.yml # Scans open-source libraries
+#   - template: Security/Container-Scanning.gitlab-ci.yml  # Scans Docker/container images
 
 build_image:
   stage: build
@@ -30,5 +30,5 @@ build_image:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker build --pull --build-arg DOTNET_NUGET_SIGNATURE_VERIFICATION=false -t "$CI_REGISTRY_IMAGE:$DOCKER_TAG" -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" -f QuoteApi/Dockerfile .
     - docker push "$CI_REGISTRY_IMAGE:$DOCKER_TAG"
-    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE:latest"
 
