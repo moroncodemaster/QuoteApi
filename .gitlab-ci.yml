@@ -28,7 +28,7 @@ build_image:
   script:
     # Login to GitLab Container Registry
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker build --pull --build-arg DOTNET_NUGET_SIGNATURE_VERIFICATION=false -t "$CI_REGISTRY_IMAGE:$DOCKER_TAG" -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" -f QuoteApi/Dockerfile .
+    - docker build --pull --build-arg DOTNET_NUGET_SIGNATURE_VERIFICATION=false -t "$CI_REGISTRY_IMAGE:$DOCKER_TAG" -t "$CI_REGISTRY_IMAGE:latest" -f QuoteApi/Dockerfile .
     - docker push "$CI_REGISTRY_IMAGE:$DOCKER_TAG"
     - docker push "$CI_REGISTRY_IMAGE:latest"
 
